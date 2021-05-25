@@ -5,45 +5,106 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 
 class Employee {
+
     constructor(name, id, email) {
         this.name = name;
         this.id = id;
         this.email = email;
-        getName();
-        getId();
-        getRole();
+    }
+
+    getName() {
+        return this.name;
+    }
+
+    getId() {
+        return this.id;
+    }
+
+    getEmail() {
+        return this.email;
+    }
+
+    getRole() {
+        return "Employee";
+    }
+
+}
+
+
+class Manager extends Employee {
+    constructor(officeNum) {
+        this.officeNum = officeNum
+    }
+    getOfficeNum() {
+        return this.officeNum;
+    }
+
+    getRole() {
+        return "Manager";
     }
 }
-const getName = () => {
-    return inquirer.prompt([
-        {
-            name: 'name',
-            message: 'Please enter the employees name',
-            type: 'input',
-        }
-    ])
-};
-// class Manager extends Employee {
 
+
+class Engineer extends Employee {
+    constructor(github) {
+        this.github = github
+    }
+    getGithub() {
+        return this.github;
+    }
+
+    getRole() {
+        return "Engineer";
+    }
+}
+
+
+
+class Intern extends Employee {
+    constructor(school) {
+        this.school = school
+    }
+    getSchool() {
+        return this.school;
+    }
+
+    getRole() {
+        return "Intern";
+    }
+}
+
+
+
+// const getName = () => {
+//     [
+//         {
+//             type: 'input',
+//             message: "Please enter the employee's name.",
+//             name: 'title',
+//         },
+//     ]
 // }
 
-        // .then(answers => {
-        //     const manager = new Manager(managerName, managerID, managerEmail, managerOffice);
-
-        //     switch (answers.newEmployeeType) {
-
-        //         case "Engineer":
-        //             addEngineer();
-        //             break;
-        //         case "Intern":
-        //             addIntern();
-        //             break;
-        //         default:
-        //             buildTeam();
-        //     }
 
 
-        // })
+
+//         .then(answers => {
+//     const manager = new Manager(managerName, managerID, managerEmail, officeNum);
+
+//     switch (answers.newEmployeeType) {
+
+//         case "Engineer":
+//             addEngineer();
+//             break;
+//         case "Intern":
+//             addIntern();
+//             break;
+//         default:
+//             buildTeam();
+//     }
+
+
+// })
 
 
 
