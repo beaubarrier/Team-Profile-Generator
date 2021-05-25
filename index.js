@@ -4,7 +4,7 @@ const util = require('util');
 const writeFileAsync = util.promisify(fs.writeFile);
 
 
-const managerQuestions = () => {
+const newProfile = () => {
     return inquirer.prompt([
         {
             type: 'input',
@@ -28,41 +28,60 @@ const managerQuestions = () => {
         },
         {
             type: 'list',
-            message: "Please enter a the team managers name.",
-            choices: ["Engineer", "Intern"],
+            message: "Please select a new employee type.",
+            choices: ["Engineer", "Intern", "Done"],
             name: 'newEmployeeType'
         },
-        {
-            when: function (response) {
-                if (response.newEmployeeType === "Engineer") {
-                    return inquirer.prompt([
-                        {
-                            type: 'input',
-                            message: "Please enter a the team manager's name.",
-                            name: 'engineerName',
-                        },
-                    ])
 
-                    // console.log(response.newEmployeeType);
-                    // engineerQuestions();
-                }
-                // return response.newEmployeeType;
 
+    ])
+        .then(answers => {
+            // const manager = new Manager(managerName, managerID, managerEmail, managerOffice);
+            // here you can add switch that checks where engineer is selected or Intern is selected 
+            switch (answers.newEmployeeType) {
+
+                case "Engineer":
+                    addEngineer();
+                    break;
+                case "Intern":
+                    addIntern();
+                    break;
+                default:
+                    buildTeam();
             }
-        }
 
+
+        })
+
+}
+
+const addEngineer = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            message: "Please enter the engineer's name.",
+            name: 'engineerName',
+        },
+        {
+            type: 'input',
+            message: "Please enter the engineer's employee ID.",
+            name: 'engineerID',
+        },
+        {
+            type: 'input',
+            message: "Please enter the engineer's email address.",
+            name: 'engineerEmail',
+        },
+        {
+            type: 'input',
+            message: "Please enter the engineer's GitHub user name.",
+            name: 'engineerGithub',
+        },
     ])
 
 }
-// const engineerQuestions = () => {
-//     return inquirer.prompt([
-//         {
-//             type: 'input',
-//             message: "Please enter a the team manager's name.",
-//             name: 'engineerName',
-//         },
-//     ])
-// }
+
+
 
 
 
@@ -79,9 +98,9 @@ const writeToFile = (data) =>
   <title>Document</title>
 </head>
 <body>
+
 ${data.managerName}
-
-
+${data.engineerName}
 
 </body>
 </html>
@@ -90,11 +109,12 @@ ${data.managerName}
 
 function init() {
 
-    managerQuestions()
-
+    newProfile()
         .then((data) => writeFileAsync('teamInfo.html', writeToFile(data)))
         .then(() => console.log('Congrats! You have successfully created your team file!'))
         .catch((err) => console.error(err));
+
 };
 
-init();
+
+init()
