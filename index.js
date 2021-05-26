@@ -1,67 +1,11 @@
 const inquirer = require('inquirer');
-const fs = require('fs');
 const util = require('util');
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const path = require("path");
+const fs = require("fs");
 const writeFileAsync = util.promisify(fs.writeFile);
-const path = require('path');
-
-
-
-class Employee {
-
-    constructor(name, id, email) {
-        this.name = name;
-        this.id = id;
-        this.email = email;
-    }
-
-    getName() {
-        return this.name;
-    }
-
-    getId() {
-        return this.id;
-    }
-
-    getEmail() {
-        return this.email;
-    }
-
-    getRole() {
-        return "Employee";
-    }
-
-}
-
-
-class Manager extends Employee {
-    constructor(name, id, email, officeNum) {
-        super(name, id, email)
-        this.officeNum = officeNum
-    }
-    getOfficeNum() {
-
-        return this.officeNum;
-    }
-
-    getRole() {
-        return "Manager";
-    }
-}
-
-
-class Engineer extends Employee {
-    constructor(name, id, email, github) {
-        super(name, id, email, github)
-        this.github = github
-    }
-    getGithub() {
-        return this.github;
-    }
-
-    getRole() {
-        return "Engineer";
-    }
-}
 
 
 
@@ -70,12 +14,12 @@ function promptManager() {
         {
             type: "input",
             name: "name",
-            message: "Manager Name:"
+            message: "Please enter the team manager's name."
         },
         {
             type: "input",
             name: "id",
-            message: "Manager ID:",
+            message: "Please enter the team manager's ID number.",
             validate: function (value) {
                 var valid = !isNaN(parseFloat(value));
                 return valid || 'Please enter a number';
@@ -85,12 +29,12 @@ function promptManager() {
         {
             type: "input",
             name: "email",
-            message: "Manager Email:"
+            message: "Please enter the team manager's email address."
         },
         {
             type: "input",
             name: "officeNumber",
-            message: "Manager Office Number:",
+            message: "Please enter the team manager's office number.",
             validate: function (value) {
                 var valid = !isNaN(parseFloat(value));
                 return valid || 'Please enter a number';
@@ -99,7 +43,7 @@ function promptManager() {
         {
             type: "list",
             name: "newEmployeeType",
-            message: "Would you like to add an engineer or intern?",
+            message: "If you would like to add another employee, select that employee type. If finished, select 'Done'.",
             choices: ["Engineer", "Intern", "Done"]
         }
     ])
@@ -127,12 +71,12 @@ function promptEngineer() {
         {
             type: "input",
             name: "name",
-            message: "Engineer Name:"
+            message: "Please enter the engineer's name."
         },
         {
             type: "input",
             name: "id",
-            message: "Engineer ID:",
+            message: "Please enter the engineer's ID number.",
             validate: function (value) {
                 var valid = !isNaN(parseFloat(value));
                 return valid || 'Please enter a number';
@@ -141,7 +85,7 @@ function promptEngineer() {
         {
             type: "input",
             name: "email",
-            message: "Engineer Email:"
+            message: "Please enter the engineer's email address."
         },
         {
             type: "input",
@@ -151,7 +95,7 @@ function promptEngineer() {
         {
             type: "list",
             name: "newEmployeeType",
-            message: "Would you like to add another engineer or intern?",
+            message: "If you would like to add another employee, select that employee type. If finished, select 'Done'",
             choices: ["Engineer", "Intern", "Done"]
         }
     ])
@@ -181,12 +125,12 @@ function promptIntern() {
         {
             type: "input",
             name: "name",
-            message: "Intern Name:"
+            message: "Please enter the intern's name."
         },
         {
             type: "input",
             name: "id",
-            message: "Intern ID:",
+            message: "Please enter the intern's ID number.",
             validate: function (value) {
                 var valid = !isNaN(parseFloat(value));
                 return valid || 'Please enter a number';
@@ -195,17 +139,17 @@ function promptIntern() {
         {
             type: "input",
             name: "email",
-            message: "Intern Email:"
+            message: "Please enter the intern's email address."
         },
         {
             type: "input",
             name: "school",
-            message: "Intern School:"
+            message: "Please enter the intern's school."
         },
         {
             type: "list",
             name: "newEmployeeType",
-            message: "Would you like to add another engineer or intern?",
+            message: "If you would like to add another employee, select that employee type. If finished, select 'Done'",
             choices: ["Engineer", "Intern", "Done"]
         }
     ])
@@ -229,37 +173,38 @@ function promptIntern() {
         })
 }
 
+promptManager();
 
 
-const writeToFile = (data) =>
+// const writeToFile = (data) =>
 
-    `
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-
-
-${data.engineer.name}
-
-</body>
-</html>
-
-`
-
-function init() {
-
-    promptManager()
-        .then((data) => writeFileAsync('teamInfo.html', writeToFile(data)))
-        .then(() => console.log('Congrats! You have successfully created your team file!'))
-        .catch((err) => console.error(err));
-
-};
+//     `
+//     <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//   <title>Document</title>
+// </head>
+// <body>
 
 
-init()
+// ${data.engineer.name}
+
+// </body>
+// </html>
+
+// `
+
+// function init() {
+
+//     promptManager()
+//         .then((data) => writeFileAsync('teamInfo.html', writeToFile(data)))
+//         .then(() => console.log('Congrats! You have successfully created your team file!'))
+//         .catch((err) => console.error(err));
+
+// };
+
+
+// init()
