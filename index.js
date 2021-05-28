@@ -6,6 +6,9 @@ const Intern = require("./lib/Intern");
 const path = require("path");
 const fs = require("fs");
 const writeFileAsync = util.promisify(fs.writeFile);
+const templatesDir = path.resolve(__dirname, "./dist");
+const team = [];
+const render = require("./src/helper");
 
 
 
@@ -48,8 +51,11 @@ function promptManager() {
         }
     ])
         .then(answers => {
-            const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNum);
-            console.log(answers.officeNum);
+            const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+            team.push(manager);
+
+            console.log(team);
+
             switch (answers.newEmployeeType) {
 
                 case "Engineer":
@@ -64,6 +70,8 @@ function promptManager() {
 
 
         })
+
+
 }
 
 function promptEngineer() {
@@ -102,7 +110,7 @@ function promptEngineer() {
         .then(answers => {
             const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
             console.log(answers.github);
-
+            team.push(engineer)
             switch (answers.newEmployeeType) {
 
                 case "Engineer":
@@ -156,7 +164,7 @@ function promptIntern() {
         .then(answers => {
             const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
             console.log(answers.school);
-
+            team.push(intern)
             switch (answers.newEmployeeType) {
 
                 case "Engineer":
@@ -173,7 +181,64 @@ function promptIntern() {
         })
 }
 
+
+
+const buildTeam = () => {
+    console.log(team);
+    console.log("file location", path.join(templatesDir, 'team.html'));
+    fs.writeFile(path.join(templatesDir, 'team.html'), render(team), (err) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("Congrats! You successfully generated your team profile!")
+        }
+    })
+}
+
+
+
+
+
 promptManager();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                          ********************** UNUSED CODE TO BE REMOVED BEFORE SUBMISSION **********************
+
+
+    // JSON.stringify(manager)
+    // fs.appendFile('body.html', manager, function (err) {
+    //     console.log(manager)
+    //     if (err) throw err;
+    //     console.log('Saved!');
+
+    // renderManager();
+    //     let template = fs.readFileSync(path.resolve(templatesDir, "manager.html"), "utf8");
+    //     template = replacePlaceholders(template, "name", manager.getName());
+    //     template = replacePlaceholders(template, "role", manager.getRole());
+    //     template = replacePlaceholders(template, "email", manager.getEmail());
+    //     template = replacePlaceholders(template, "id", manager.getId());
+    //     template = replacePlaceholders(template, "officeNumber", manager.getOfficeNumber());
+    //     return template;
+    // };
+
+
 
 
 // const writeToFile = (data) =>
@@ -208,3 +273,5 @@ promptManager();
 
 
 // init()
+
+//                              *********************************************************************************************************
