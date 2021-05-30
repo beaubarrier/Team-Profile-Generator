@@ -2,29 +2,29 @@
 const path = require("path");
 const fs = require("fs");
 
-// sets the directory for helper file, tells to look in ./src folder
+// sets the directory for helper file, tells to look in ../src folder
 const templatesDir = path.resolve(__dirname, "../src");
 
 // log templates to troubleshoot
-console.log("helper file ", templatesDir);
+// console.log("helper file ", templatesDir);
 
 // render fucntion, employees holds array of employee objects 
 const render = employees => {
 
-    console.log("-------")
-    console.log(employees)
-    console.log("-------")
+    // console.log("-------")
+    // console.log(employees)
+    // console.log("-------")
 
-    // html array holds html template for each employee
+    // html array holds html template for each employee object
     const html = [];
 
-    // html.push adds filtered employees html to html array.
+    // html.push adds filtered employees html template to html array.
     html.push(employees
 
-        // filters through the employee class to return object with  Manager roll    
+        // filters through the employee class to return object with Manager roll    
         .filter(employee => employee.getRole() === "Manager")
 
-        // map calls the function once for each element in the manager(?) array    
+        // map calls the function once for each element in the manager(?) array    ???  
         .map(manager => renderManager(manager)).join("")
     );
     html.push(employees
@@ -35,15 +35,18 @@ const render = employees => {
         .filter(employee => employee.getRole() === "Intern")
         .map(intern => renderIntern(intern)).join("")
     );
-    console.log("****")
-    console.log(html)
-    console.log("****")
 
-    // calls the renderMain function with data from html array
+
+    // console.log("****")
+    // console.log(html)
+    // console.log("****")
+
+
+    // returns the renderMain function, passes data from html array to that function
     return renderMain(html.join(""));
 };
 
-// function to place data in its corresponding html placement 
+// function to print data to its corresponding html element for the manager class.
 const renderManager = manager => {
 
     // sets variable 'template' to read the file specified in 'templatesDir', resolve takes data from 'templateDir'(from) and passes it to "manager.html"(to)
@@ -83,17 +86,17 @@ const renderIntern = intern => {
 // function for the main body of html. contains cdn links/html framework.
 const renderMain = html => {
 
-    // sets template variable to take data from templatesDir variable and pass it to "body.html"
-    const template = fs.readFileSync(path.resolve(templatesDir, "body.html"), "utf8");
+    // sets template variable to take data from templatesDir variable and pass it to "body.html" / takes data from body.html and ----
+    const template = fs.readFileSync(path.resolve(templatesDir, "body.html"), "utf8"); // templatesDir, body.html tells directory and, file name respetively, utf8 is options of fs.readFileSync
 
-    // specifys template, placeholder, and value values to be included in replacePlaceholders function.
-    return replacePlaceholders(template, "team", html);
+    // specifys template, placeholder, and value values to be included in replacePlaceholders function. takes template, sets name of html to team
+    return replacePlaceholders(template, "team", html);// passes the directory, name, and value to renplacePlacholders
 };
 
-// function for finding placeholder text, variables that will be passed in
+// function for finding placeholder text, variables that will be passed in template, placeholder and value 
 const replacePlaceholders = (template, placeholder, value) => {
 
-    // pattern specifies the syntax used to set a placeholder. RegExp matches the specified text with its pattern within the html.
+    // pattern variable specifies the syntax used to set a placeholder. RegExp matches the specified text with its pattern within the html.
     // "g" tells RegExp to replace all instances of the placeholder text, not stopping at the first instance.
     const pattern = new RegExp("{{ " + placeholder + " }}", "g");
 
@@ -103,3 +106,5 @@ const replacePlaceholders = (template, placeholder, value) => {
 
 // exports as variable render
 module.exports = render;
+
+

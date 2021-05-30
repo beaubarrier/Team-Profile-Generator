@@ -1,19 +1,24 @@
 const inquirer = require('inquirer');
-const util = require('util');
+const fs = require("fs");
+const path = require("path");
+
+const templatesDir = path.resolve(__dirname, "./dist");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const path = require("path");
-const fs = require("fs");
-const writeFileAsync = util.promisify(fs.writeFile);
-const templatesDir = path.resolve(__dirname, "./dist");
-const team = [];
+
 const render = require("./src/helper");
 
+const team = [];
 
 
 function promptManager() {
     return inquirer.prompt([
+        {
+            type: "input",
+            name: "teamName",
+            message: "Please enter a name for your team."
+        },
         {
             type: "input",
             name: "name",
@@ -40,7 +45,7 @@ function promptManager() {
             message: "Please enter the team manager's office number.",
             validate: function (value) {
                 var valid = !isNaN(parseFloat(value));
-                return valid || 'Please enter a number';
+                return valid || 'Please enter a number!';
             },
         },
         {
@@ -54,7 +59,7 @@ function promptManager() {
             const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
             team.push(manager);
 
-            console.log(team);
+            // console.log(team);
 
             switch (answers.newEmployeeType) {
 
@@ -67,11 +72,7 @@ function promptManager() {
                 case "Done":
                     buildTeam();
             }
-
-
         })
-
-
 }
 
 function promptEngineer() {
@@ -109,7 +110,7 @@ function promptEngineer() {
     ])
         .then(answers => {
             const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
-            console.log(answers.github);
+            // console.log(answers.github);
             team.push(engineer)
             switch (answers.newEmployeeType) {
 
@@ -122,10 +123,7 @@ function promptEngineer() {
                 case "Done":
                     buildTeam();
             }
-
-
         })
-
 }
 
 function promptIntern() {
@@ -163,7 +161,7 @@ function promptIntern() {
     ])
         .then(answers => {
             const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
-            console.log(answers.school);
+            // console.log(answers.school);
             team.push(intern)
             switch (answers.newEmployeeType) {
 
@@ -176,16 +174,12 @@ function promptIntern() {
                 case "Done":
                     buildTeam();
             }
-
-
         })
 }
 
-
-
 const buildTeam = () => {
-    console.log(team);
-    console.log("file location", path.join(templatesDir, 'team.html'));
+    // console.log(team);
+    // console.log("file location", path.join(templatesDir, 'team.html'));
     fs.writeFile(path.join(templatesDir, 'team.html'), render(team), (err) => {
         if (err) {
             console.log(err)
@@ -194,10 +188,6 @@ const buildTeam = () => {
         }
     })
 }
-
-
-
-
 
 promptManager();
 
@@ -221,22 +211,6 @@ promptManager();
 
 //                          ********************** UNUSED CODE TO BE REMOVED BEFORE SUBMISSION **********************
 
-
-    // JSON.stringify(manager)
-    // fs.appendFile('body.html', manager, function (err) {
-    //     console.log(manager)
-    //     if (err) throw err;
-    //     console.log('Saved!');
-
-    // renderManager();
-    //     let template = fs.readFileSync(path.resolve(templatesDir, "manager.html"), "utf8");
-    //     template = replacePlaceholders(template, "name", manager.getName());
-    //     template = replacePlaceholders(template, "role", manager.getRole());
-    //     template = replacePlaceholders(template, "email", manager.getEmail());
-    //     template = replacePlaceholders(template, "id", manager.getId());
-    //     template = replacePlaceholders(template, "officeNumber", manager.getOfficeNumber());
-    //     return template;
-    // };
 
 
 
