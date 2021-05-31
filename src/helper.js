@@ -2,7 +2,7 @@
 const path = require("path");
 const fs = require("fs");
 
-// sets the directory for helper file, tells to look in ../src folder
+// sets the absolute directory as variable templatesDir, defines root directory as '../src'
 const templatesDir = path.resolve(__dirname, "../src");
 
 // log templates to troubleshoot
@@ -24,7 +24,7 @@ const render = employees => {
         // filters through the employee class to return object with Manager roll    
         .filter(employee => employee.getRole() === "Manager")
 
-        // map calls the function once for each element in the manager(?) array    ???  
+        // map calls the function once for each element in the manager(?) array     
         .map(manager => renderManager(manager)).join("")
     );
     html.push(employees
@@ -36,13 +36,11 @@ const render = employees => {
         .map(intern => renderIntern(intern)).join("")
     );
 
-
     // console.log("****")
     // console.log(html)
     // console.log("****")
 
-
-    // returns the renderMain function, passes data from html array to that function
+    // passes data from html array to renderMain function
     return renderMain(html.join(""));
 };
 
@@ -82,29 +80,26 @@ const renderIntern = intern => {
     return template;
 };
 
-
 // function for the main body of html. contains cdn links/html framework.
 const renderMain = html => {
 
-    // sets template variable to take data from templatesDir variable and pass it to "body.html" / takes data from body.html and ----
-    const template = fs.readFileSync(path.resolve(templatesDir, "body.html"), "utf8"); // templatesDir, body.html tells directory and, file name respetively, utf8 is options of fs.readFileSync
+    // sets template variable to path /templatesDir/body.html, use utf8 encoding option.   
+    const template = fs.readFileSync(path.resolve(templatesDir, "body.html"), "utf8");
 
-    // specifys template, placeholder, and value values to be included in replacePlaceholders function. takes template, sets name of html to team
-    return replacePlaceholders(template, "team", html);// passes the directory, name, and value to renplacePlacholders
+    // template (assigned to directory in file on line above), key("team"), and value(html) will be passed to replacePlaceholders function.
+    return replacePlaceholders(template, "team", html);
 };
 
-// function for finding placeholder text, variables that will be passed in template, placeholder and value 
+// function for finding placeholder text, variables that will be passed in template(path), placeholder(specified in RegExp) and value(contents of html array) 
 const replacePlaceholders = (template, placeholder, value) => {
 
     // pattern variable specifies the syntax used to set a placeholder. RegExp matches the specified text with its pattern within the html.
     // "g" tells RegExp to replace all instances of the placeholder text, not stopping at the first instance.
     const pattern = new RegExp("{{ " + placeholder + " }}", "g");
 
-    // replaces data from pattern with the new value of template.
+    // replaces data specified in pattern variable, with the value passed in from renderMain function.
     return template.replace(pattern, value);
 };
 
-// exports as variable render
+// exports data as variable render
 module.exports = render;
-
-

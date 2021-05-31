@@ -1,24 +1,17 @@
 const inquirer = require('inquirer');
 const fs = require("fs");
 const path = require("path");
-
-const templatesDir = path.resolve(__dirname, "./dist");
+const render = require("./src/helper");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
-const render = require("./src/helper");
+const templatesDir = path.resolve(__dirname, "./dist");
 
 const team = [];
 
-
 function promptManager() {
     return inquirer.prompt([
-        {
-            type: "input",
-            name: "teamName",
-            message: "Please enter a name for your team."
-        },
         {
             type: "input",
             name: "name",
@@ -190,62 +183,3 @@ const buildTeam = () => {
 }
 
 promptManager();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//                          ********************** UNUSED CODE TO BE REMOVED BEFORE SUBMISSION **********************
-
-
-
-
-
-// const writeToFile = (data) =>
-
-//     `
-//     <!DOCTYPE html>
-// <html lang="en">
-// <head>
-//   <meta charset="UTF-8">
-//   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//   <title>Document</title>
-// </head>
-// <body>
-
-
-// ${data.engineer.name}
-
-// </body>
-// </html>
-
-// `
-
-// function init() {
-
-//     promptManager()
-//         .then((data) => writeFileAsync('teamInfo.html', writeToFile(data)))
-//         .then(() => console.log('Congrats! You have successfully created your team file!'))
-//         .catch((err) => console.error(err));
-
-// };
-
-
-// init()
-
-//                              *********************************************************************************************************
