@@ -8,7 +8,7 @@ const templatesDir = path.resolve(__dirname, "../src");
 // log templates to troubleshoot
 // console.log("helper file ", templatesDir);
 
-// render fucntion, employees holds array of employee objects 
+// render fucntion, sets employees as parameter.
 const render = employees => {
 
     // console.log("-------")
@@ -50,8 +50,7 @@ const renderManager = manager => {
     // sets variable 'template' to read the file specified in 'templatesDir', resolve takes data from 'templateDir'(from) and passes it to "manager.html"(to)
     let template = fs.readFileSync(path.resolve(templatesDir, "manager.html"), "utf8");
 
-    // calls replacePlaceholders function and passes in template, placeholder key, and value from the manager class function getName().
-    // follows path specified in 'template' variable. looks for "name" placeholder key in html document. changes value of placeholder to data from manager.getName().
+    // follows path specified in 'template' variable. looks for "name" placeholder key in html document. changes value of placeholder to data from manager.getSomething().
     template = replacePlaceholders(template, "name", manager.getName());
     template = replacePlaceholders(template, "role", manager.getRole());
     template = replacePlaceholders(template, "email", manager.getEmail());
