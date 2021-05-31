@@ -8,7 +8,7 @@ const templatesDir = path.resolve(__dirname, "../src");
 // log templates to troubleshoot
 // console.log("helper file ", templatesDir);
 
-// render fucntion, employees holds array of employee objects 
+// render fucntion starts here, sets employees as parameter.   
 const render = employees => {
 
     // console.log("-------")
