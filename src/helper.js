@@ -8,7 +8,7 @@ const templatesDir = path.resolve(__dirname, "../src");
 // log templates to troubleshoot
 // console.log("helper file ", templatesDir);
 
-// render function, sets employees as parameter.
+// render fucntion, sets employees as parameter.
 const render = employees => {
 
     // console.log("-------")
@@ -47,7 +47,7 @@ const render = employees => {
 // function to print data to its corresponding html element for the manager class.
 const renderManager = manager => {
 
-    // sets variable 'template' to read the file specified in 'templatesDir', resolve takes data from 'templateDir'(from) and passes it to "manager.html"(to), uses utf8 encoding option.
+    // sets template variable, reads contents of manager.html inside directory specified by templatesDir, use utf8 encoding option.   
     let template = fs.readFileSync(path.resolve(templatesDir, "manager.html"), "utf8");
 
     // follows path specified in 'template' variable. looks for "name" placeholder key in html document. changes value of placeholder to data from manager.getSomething().
@@ -82,10 +82,10 @@ const renderIntern = intern => {
 // function for the main body of html. contains cdn links/html framework.
 const renderMain = html => {
 
-    // sets template variable to path /templatesDir/body.html, use utf8 encoding option.   
+    // sets template variable, reads contents of body.html inside directory specified by templatesDir, use utf8 encoding option.   
     const template = fs.readFileSync(path.resolve(templatesDir, "body.html"), "utf8");
 
-    // template (assigned to directory in file on line above), key("team"), and value(html) will be passed to replacePlaceholders function.
+    // template (assigned to directory on line above), key("team"), and value(html array) will be passed to replacePlaceholders function.
     return replacePlaceholders(template, "team", html);
 };
 

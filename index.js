@@ -5,6 +5,7 @@ const render = require("./src/helper");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const ghAccountExists = require('gh-account-exists');
 
 const templatesDir = path.resolve(__dirname, "./dist");
 
@@ -15,7 +16,11 @@ function promptManager() {
         {
             type: "input",
             name: "name",
-            message: "Please enter the team manager's name."
+            message: "Please enter the team manager's name.",
+            validate: function (value) {
+                var valid = isNaN(parseFloat(value));
+                return valid || 'Please enter a valid name.';
+            },
         },
         {
             type: "input",
@@ -23,7 +28,7 @@ function promptManager() {
             message: "Please enter the team manager's ID number.",
             validate: function (value) {
                 var valid = !isNaN(parseFloat(value));
-                return valid || 'Please enter a number';
+                return valid || 'Please enter a number.';
             },
 
         },
@@ -38,7 +43,7 @@ function promptManager() {
             message: "Please enter the team manager's office number.",
             validate: function (value) {
                 var valid = !isNaN(parseFloat(value));
-                return valid || 'Please enter a number!';
+                return valid || 'Please enter a number.';
             },
         },
         {
@@ -64,6 +69,7 @@ function promptManager() {
                     break;
                 case "Done":
                     buildTeam();
+                    break;
             }
         })
 }
@@ -73,7 +79,12 @@ function promptEngineer() {
         {
             type: "input",
             name: "name",
-            message: "Please enter the engineer's name."
+            message: "Please enter the engineer's name.",
+            validate: function (value) {
+                var valid = isNaN(parseFloat(value));
+                return valid || 'Please enter a valid name.';
+            },
+
         },
         {
             type: "input",
@@ -81,18 +92,23 @@ function promptEngineer() {
             message: "Please enter the engineer's ID number.",
             validate: function (value) {
                 var valid = !isNaN(parseFloat(value));
-                return valid || 'Please enter a number';
+                return valid || 'Please enter a number.';
             },
         },
         {
             type: "input",
             name: "email",
-            message: "Please enter the engineer's email address."
+            message: "Please enter the engineer's email address.",
+
         },
         {
             type: "input",
             name: "github",
-            message: "Engineer GitHub Name:"
+            message: "Engineer GitHub Name:",
+            // validate: function (value) {
+            //     var valid = ghAccountExists(value);
+            //     return valid || 'Please enter a number.';
+            // }
         },
         {
             type: "list",
@@ -115,6 +131,9 @@ function promptEngineer() {
                     break;
                 case "Done":
                     buildTeam();
+                    break;
+                default:
+                    buildTeam();
             }
         })
 }
@@ -124,7 +143,11 @@ function promptIntern() {
         {
             type: "input",
             name: "name",
-            message: "Please enter the intern's name."
+            message: "Please enter the intern's name.",
+            validate: function (value) {
+                var valid = isNaN(parseFloat(value));
+                return valid || 'Please enter a valid name.';
+            },
         },
         {
             type: "input",
@@ -132,7 +155,7 @@ function promptIntern() {
             message: "Please enter the intern's ID number.",
             validate: function (value) {
                 var valid = !isNaN(parseFloat(value));
-                return valid || 'Please enter a number';
+                return valid || 'Please enter a number.';
             },
         },
         {
@@ -165,6 +188,9 @@ function promptIntern() {
                     promptIntern();
                     break;
                 case "Done":
+                    buildTeam();
+                    break;
+                default:
                     buildTeam();
             }
         })
