@@ -1,8 +1,10 @@
+
 Team Profile Generator
 =========================
 Welcome to my team profile generator! 
 <br><br><br>
-
+![ourTeamHTMLpage](https://user-images.githubusercontent.com/78766978/120874325-01555f00-c55b-11eb-816a-fe4807fbe487.png)
+<br><br>
 
 Table of contents
 -----------------
@@ -48,7 +50,7 @@ It should look like this, 'node *yourFile*.js'
 - Now you will be prompted with a series of questions asking for the manager's information. After answering these questions you will
 be prompted to choose between adding an engineer, adding an intern, or ending the program and generating your team profile.
 <br><br>
-- Click <a href="videourl.com">here</a> to see a video demonstrating the application.
+- Click <a href="https://drive.google.com/drive/folders/1oT7-Wm5yVmbFWwgHumDw8R7H2rHrdRuw?usp=sharing">here</a> to see a video demonstrating the application.
 <br><br><br>
 
 Contact
