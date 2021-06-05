@@ -50,7 +50,7 @@ It should look like this, 'node *yourFile*.js'
 - Now you will be prompted with a series of questions asking for the manager's information. After answering these questions you will
 be prompted to choose between adding an engineer, adding an intern, or ending the program and generating your team profile.
 <br><br>
-- Click <a href="https://drive.google.com/drive/folders/1oT7-Wm5yVmbFWwgHumDw8R7H2rHrdRuw?usp=sharing">here</a> to see a video demonstrating the application.
+- Click <a href="https://drive.google.com/file/d/1T_el_YDIZ5mDJ8qWPp2uhqEXusK2nNtT/view?usp=sharing">here</a> to see a video demonstrating the application.
 <br><br><br>
 
 Contact
