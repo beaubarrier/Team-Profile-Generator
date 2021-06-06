@@ -1,11 +1,11 @@
 const inquirer = require('inquirer');
 const fs = require("fs");
 const path = require("path");
-const render = require("./src/helper");
+const render = require("./lib/helper");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const ghAccountExists = require('gh-account-exists');
+// const ghAccountExists = require('gh-account-exists');  -- I tried to have the engineers github user name be checked for validity using this node module. Success was not achieved.
 
 const templatesDir = path.resolve(__dirname, "./dist");
 
@@ -35,7 +35,7 @@ function promptManager() {
         {
             type: "input",
             name: "email",
-            message: "Please enter the team manager's email address."
+            message: "Please enter the team manager's email address.",
         },
         {
             type: "input",
@@ -56,8 +56,6 @@ function promptManager() {
         .then(answers => {
             const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
             team.push(manager);
-
-            // console.log(team);
 
             switch (answers.newEmployeeType) {
 
@@ -99,7 +97,6 @@ function promptEngineer() {
             type: "input",
             name: "email",
             message: "Please enter the engineer's email address.",
-
         },
         {
             type: "input",
@@ -107,7 +104,7 @@ function promptEngineer() {
             message: "Engineer GitHub Name:",
             // validate: function (value) {
             //     var valid = ghAccountExists(value);
-            //     return valid || 'Please enter a number.';
+            //     return valid || 'Please enter a valid GitHub username.';
             // }
         },
         {
@@ -161,12 +158,16 @@ function promptIntern() {
         {
             type: "input",
             name: "email",
-            message: "Please enter the intern's email address."
+            message: "Please enter the intern's email address.",
         },
         {
             type: "input",
             name: "school",
-            message: "Please enter the intern's school."
+            message: "Please enter the intern's school.",
+            validate: function (value) {
+                var valid = isNaN(parseFloat(value));
+                return valid || 'Please enter a valid school name.';
+            },
         },
         {
             type: "list",
@@ -197,13 +198,11 @@ function promptIntern() {
 }
 
 const buildTeam = () => {
-    // console.log(team);
-    // console.log("file location", path.join(templatesDir, 'team.html'));
     fs.writeFile(path.join(templatesDir, 'team.html'), render(team), (err) => {
         if (err) {
             console.log(err)
         } else {
-            console.log("Congrats! You successfully generated your team profile!")
+            console.log("Booyah! You successfully generated your team profile!")
         }
     })
 }
